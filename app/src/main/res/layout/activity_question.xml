@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -66,52 +65,63 @@
             android:id="@+id/option_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
+            android:minHeight="50dp"
+            android:background="@drawable/bbb"
             android:textColor="@color/darkGrey"
             android:textSize="20sp"
             android:textStyle="normal"
-            tools:text="option 1"
-            android:layout_marginTop="10dp"/>
+            tools:text="option 1" />
 
         <TextView
             android:id="@+id/option_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bbb"
             android:gravity="center"
+            android:minHeight="50dp"
             android:textColor="@color/darkGrey"
             android:textSize="20sp"
             android:textStyle="normal"
-            tools:text="option 2"
-            android:layout_marginTop="10dp"/>
+            tools:text="option 2" />
 
         <TextView
             android:id="@+id/option_three"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bbb"
             android:gravity="center"
+            android:minHeight="50dp"
             android:textColor="@color/darkGrey"
             android:textSize="20sp"
             android:textStyle="normal"
-            tools:text="option 3"
-            android:layout_marginTop="10dp"/>
+            tools:text="option 3" />
 
         <TextView
             android:id="@+id/option_four"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bbb"
             android:gravity="center"
+            android:minHeight="50dp"
             android:textColor="@color/darkGrey"
             android:textSize="20sp"
             android:textStyle="normal"
-            tools:text="option 4"
-            android:layout_marginTop="10dp"/>
+            tools:text="option 4" />
+
         <Button
+            android:id="@+id/button_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_submit"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bbb"
+            android:minHeight="50dp"
             android:text="@string/check"
             android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            />
+            android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

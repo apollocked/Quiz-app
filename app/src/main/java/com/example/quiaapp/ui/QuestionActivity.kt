@@ -2,23 +2,40 @@ package com.example.quiaapp.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.quiaapp.R
 import com.example.quiaapp.utils.Constants
 
 class QuestionActivity : AppCompatActivity() {
+    private lateinit var progressBar: ProgressBar
+private lateinit var textViewProgress: TextView
+private lateinit var textViewQuestion: TextView
+private lateinit var flagImage: ImageView
+private lateinit var optionOne: TextView
+private lateinit var optionTwo: TextView
+private lateinit var optionThree: TextView
+private lateinit var optionFour: TextView
+private lateinit var buttonSubmit: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_question)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        progressBar=findViewById(R.id.progress_bar)
+        textViewProgress=findViewById(R.id.text_view_progress)
+        textViewQuestion=findViewById(R.id.question_text_view)
+        flagImage=findViewById(R.id.flag_image)
+        optionOne=findViewById(R.id.option_one)
+        optionTwo=findViewById(R.id.option_two)
+        optionThree=findViewById(R.id.option_three)
+        optionFour=findViewById(R.id.option_four)
+buttonSubmit=findViewById(R.id.button_submit)
+
+
+
+
         val qustions = Constants.getQuestions()
 Log.d("QuestionsSize", "${qustions.size}")
     }
