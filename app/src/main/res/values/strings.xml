@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">QuiaApp</string>
+    <string name="quia_app">Quia App</string>
+    <string name="wellcome">Wellcome</string>
+    <string name="please_enter_yourname">please enter yourname</string>
+    <string name="name">name</string>
+    <string name="start">Start</string>
 </resources>
