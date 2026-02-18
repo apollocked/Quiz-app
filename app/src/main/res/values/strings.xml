@@ -6,4 +6,5 @@
     <string name="name">name</string>
     <string name="start">Start</string>
     <string name="image_of_the_flag">image of the flag</string>
+    <string name="check">check</string>
 </resources>
