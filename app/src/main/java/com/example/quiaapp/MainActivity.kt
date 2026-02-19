@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         spinnerCategory.adapter = adapter
 
         button.setOnClickListener {
+            if (spinnerCategory.selectedItemPosition == -1)
+                Toast.makeText(this@MainActivity, "Please select a category", Toast.LENGTH_LONG).show()
+            else
             if (editText.text.isEmpty()) {
                 Toast.makeText(this@MainActivity, "Please enter your name", Toast.LENGTH_LONG).show()
             } else {

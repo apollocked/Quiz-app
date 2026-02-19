@@ -58,9 +58,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
+                    android:background="@drawable/bbb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name" />
+                    android:hint="@string/name"
+                    android:autofillHints="name"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Category Selection -->
@@ -68,18 +70,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Select Category:"
+                android:text="@string/select_category"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:padding="10dp" />
+
+
+                <Spinner
+                    android:id="@+id/spinner_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bbb"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:ellipsize="marquee"
+                    android:textStyle="bold"
+                    />
+
 
             <Button
                 android:id="@+id/Startbutton"
