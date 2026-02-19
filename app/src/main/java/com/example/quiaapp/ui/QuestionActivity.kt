@@ -66,13 +66,13 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showNextQuestion() {
-        // Fix: Check bounds before accessing the list to prevent crash
+
         if (questionCounter < questionList.size) {
             val question = questionList[questionCounter]
-            currentQuestion = question // Fix: Initialize currentQuestion for every question
+            currentQuestion = question //
 
             flagImage.setImageResource(question.image)
-            progressBar.progress = questionCounter + 1 // Fix: Display 1-based progress
+            progressBar.progress = questionCounter + 1
             textViewProgress.text = "${questionCounter + 1}/${progressBar.max}"
             textViewQuestion.text = question.question
             optionOne.text = question.optionOne
@@ -80,7 +80,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             optionThree.text = question.optionThree
             optionFour.text = question.optionFour
 
-            resetOptions() // Fix: Reset options visually for the new question
+            resetOptions()
 
             if (questionCounter == questionList.size - 1) {
                 buttonSubmit.text = "FINISH"

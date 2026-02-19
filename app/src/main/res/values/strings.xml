@@ -11,4 +11,6 @@
     <string name="trofy">trofy</string>
     <string name="hey_congratulations">Hey, Congratulations!</string>
     <string name="finish">FINISH</string>
+    <string name="your_name">Your Name</string>
+    <string name="start_again">Start Again</string>
 </resources>

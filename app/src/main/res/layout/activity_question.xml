@@ -2,7 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="center"
     tools:context=".ui.QuestionActivity">
@@ -42,13 +42,13 @@ android:padding="10sp"
             <ProgressBar
                 android:id="@+id/progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:indeterminate="false"
                 android:max="12"
-                android:minHeight="50dp"
-                tools:progress="7" />
+               android:minHeight="50sp"
+                tools:progress="9" />
 
             <TextView
                 android:id="@+id/text_view_progress"
