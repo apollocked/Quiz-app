@@ -18,6 +18,7 @@ import com.example.quiaapp.models.Quistions
 import com.example.quiaapp.utils.Constants
 
 class QuestionActivity : AppCompatActivity(), View.OnClickListener {
+
     private lateinit var progressBar: ProgressBar
     private lateinit var textViewProgress: TextView
     private lateinit var textViewQuestion: TextView
@@ -27,6 +28,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var optionThree: TextView
     private lateinit var optionFour: TextView
     private lateinit var buttonSubmit: Button
+
     private var score = 0
     private var questionCounter = 0
     private var questionList = mutableListOf<Quistions>()
@@ -34,10 +36,8 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var currentQuestion: Quistions
     private var answered = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_question)
 
         progressBar = findViewById(R.id.progress_bar)
@@ -50,28 +50,39 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         optionFour = findViewById(R.id.option_four)
         buttonSubmit = findViewById(R.id.button_submit)
 
-
         optionOne.setOnClickListener(this)
         optionTwo.setOnClickListener(this)
         optionThree.setOnClickListener(this)
         optionFour.setOnClickListener(this)
         buttonSubmit.setOnClickListener(this)
 
-        questionList = Constants.getQuestions()
+        // 1. Get the Category ID passed from MainActivity
+        val selectedCategoryId = intent.getIntExtra(Constants.SELECTED_CATEGORY, Constants.CATEGORY_FLAGS)
+
+        // 2. Load questions based on category
+        questionList = Constants.getQuestionsByCategory(selectedCategoryId)
+
+        // Set max progress dynamically
+        progressBar.max = questionList.size
 
         Log.d("QuestionsSize", "${questionList.size}")
 
         showNextQuestion()
-
     }
 
     private fun showNextQuestion() {
-
         if (questionCounter < questionList.size) {
             val question = questionList[questionCounter]
-            currentQuestion = question //
+            currentQuestion = question
 
-            flagImage.setImageResource(question.image)
+            // Handle Image: If image is 0 (no image), hide the view
+            if (question.image == 0) {
+                flagImage.visibility = View.GONE
+            } else {
+                flagImage.visibility = View.VISIBLE
+                flagImage.setImageResource(question.image)
+            }
+
             progressBar.progress = questionCounter + 1
             textViewProgress.text = "${questionCounter + 1}/${progressBar.max}"
             textViewQuestion.text = question.question
@@ -92,24 +103,17 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             answered = false
 
         } else {
-            buttonSubmit.setOnClickListener {
-                // 1. Create intent for the next activity
-                val resultIntent = Intent(this@QuestionActivity, ResultActivity::class.java)
+            // Quiz Finished - Navigate to Result
+            val resultIntent = Intent(this@QuestionActivity, ResultActivity::class.java)
+            val myUsername = intent.getStringExtra("myUsername")
 
-                // 2. Get the username from the INCOMING intent (the one that started QuestionActivity)
-                // Note: 'intent' (without a variable name) refers to the getIntent() of this activity
-                val myUsername = intent.getStringExtra("myUsername")
+            resultIntent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
+            resultIntent.putExtra("myUsername", myUsername)
+            resultIntent.putExtra(Constants.CORRECT_ANSWERS, score)
 
-                // 3. Pass the data forward to ResultActivity
-                resultIntent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
-                resultIntent.putExtra("myUsername", myUsername)
-                resultIntent.putExtra(Constants.CORRECT_ANSWERS, score)
-
-                startActivity(resultIntent)
-                finish()
-            }
+            startActivity(resultIntent)
+            finish()
         }
-
     }
 
     private fun resetOptions() {
@@ -123,9 +127,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             option.setTextColor(Color.parseColor("#7A8089"))
             option.typeface = Typeface.DEFAULT
             option.background = ContextCompat.getDrawable(this, R.drawable.bbb)
-
         }
-
     }
 
     private fun selectedOption(textView: TextView, selectedOptionNumber: Int) {
@@ -134,131 +136,58 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         textView.setTextColor(Color.parseColor("#363A43"))
         textView.setTypeface(textView.typeface, Typeface.BOLD)
         textView.background = ContextCompat.getDrawable(this, R.drawable.bbbselected)
-
-
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.option_one -> {
-                selectedOption(optionOne, 1)
-
-            }
-
-            R.id.option_two -> {
-                selectedOption(optionTwo, 2)
-
-            }
-
-            R.id.option_three -> {
-                selectedOption(optionThree, 3)
-
-            }
-
-            R.id.option_four -> {
-                selectedOption(optionFour, 4)
-
-            }
+            R.id.option_one -> selectedOption(optionOne, 1)
+            R.id.option_two -> selectedOption(optionTwo, 2)
+            R.id.option_three -> selectedOption(optionThree, 3)
+            R.id.option_four -> selectedOption(optionFour, 4)
 
             R.id.button_submit -> {
                 if (!answered) {
-
                     if (selectedOption != 0) {
                         checkAnswer()
                     } else {
                         Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show()
                     }
-
                 } else {
                     showNextQuestion()
                 }
-
                 selectedOption = 0
-
             }
-
-
         }
-
-
     }
 
     private fun checkAnswer() {
         answered = true
         if (selectedOption == currentQuestion.correctAnswer) {
             when (selectedOption) {
-                1 -> {
-                    optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)
-                    score++
-                }
-
-                2 -> {
-                    optionTwo.background = ContextCompat.getDrawable(this, R.drawable.correct)
-                    score++
-                }
-
-                3 -> {
-                    optionThree.background = ContextCompat.getDrawable(this, R.drawable.correct)
-                    score++
-                }
-
-                4 -> {
-                    optionFour.background = ContextCompat.getDrawable(this, R.drawable.correct)
-                    score++
-                }
+                1 -> optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)
+                2 -> optionTwo.background = ContextCompat.getDrawable(this, R.drawable.correct)
+                3 -> optionThree.background = ContextCompat.getDrawable(this, R.drawable.correct)
+                4 -> optionFour.background = ContextCompat.getDrawable(this, R.drawable.correct)
             }
-
+            score++
         } else {
             when (selectedOption) {
-                1 -> {
-                    optionOne.background = ContextCompat.getDrawable(this, R.drawable.wrong)
-
-                }
-
-                2 -> {
-                    optionTwo.background = ContextCompat.getDrawable(this, R.drawable.wrong)
-
-                }
-
-                3 -> {
-                    optionThree.background = ContextCompat.getDrawable(this, R.drawable.wrong)
-
-                }
-
-                4 -> {
-                    optionFour.background = ContextCompat.getDrawable(this, R.drawable.wrong)
-
-                }
+                1 -> optionOne.background = ContextCompat.getDrawable(this, R.drawable.wrong)
+                2 -> optionTwo.background = ContextCompat.getDrawable(this, R.drawable.wrong)
+                3 -> optionThree.background = ContextCompat.getDrawable(this, R.drawable.wrong)
+                4 -> optionFour.background = ContextCompat.getDrawable(this, R.drawable.wrong)
             }
         }
         buttonSubmit.text = "Next"
         showAnswer()
-
     }
 
     private fun showAnswer() {
-
         when (currentQuestion.correctAnswer) {
-            1 -> {
-                optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
-            }
-
-            2 -> {
-                optionTwo.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
-            }
-
-            3 -> {
-                optionThree.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
-            }
-
-            4 -> {
-                optionFour.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
-            }
-
+            1 -> optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)
+            2 -> optionTwo.background = ContextCompat.getDrawable(this, R.drawable.correct)
+            3 -> optionThree.background = ContextCompat.getDrawable(this, R.drawable.correct)
+            4 -> optionFour.background = ContextCompat.getDrawable(this, R.drawable.correct)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.quiaapp.ui
 
-import android.R.id
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -25,23 +24,23 @@ class ResultActivity : AppCompatActivity() {
         userName = findViewById(R.id.username)
         textViewScore = findViewById(R.id.text_view_score)
         buttonFinish = findViewById(R.id.button_finish)
+
+        // Get Data from Intent
         val myUsername = intent.getStringExtra("myUsername")
+        val totalQuestions = intent.getIntExtra(Constants.TOTAL_QUESTIONS, 0)
+        val correctAnswers = intent.getIntExtra(Constants.CORRECT_ANSWERS, 0)
 
-
+        // Set Data to Views
         userName.text = myUsername
-userName.visibility= View.VISIBLE
+        userName.visibility = View.VISIBLE
 
+        textViewScore.text = "Your Score is $correctAnswers out of $totalQuestions"
 
-        textViewScore.text =
-            "Your Score is ${intent.getIntExtra(Constants.CORRECT_ANSWERS, 0)} out of ${
-                intent.getIntExtra(
-                    Constants.TOTAL_QUESTIONS, 12)} "
-
-                        buttonFinish . setOnClickListener {
-                    // Navigate back to the main screen or close the app
-                    val intent = Intent(this@ResultActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish() // Prevents going back to the quiz
-                }
-                    }
-                }
+        buttonFinish.setOnClickListener {
+            // Navigate back to the main screen
+            val intent = Intent(this@ResultActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Prevents going back to the quiz
+        }
+    }
+}

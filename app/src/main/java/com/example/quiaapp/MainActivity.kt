@@ -31,21 +31,17 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             if (editText.text.isEmpty()) {
-                Toast.makeText(this@MainActivity, "Please enter your name", Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(this@MainActivity, "Please enter your name", Toast.LENGTH_LONG).show()
             } else {
                 val myUsername = editText.text.toString()
 
                 // Get selected category index (0 to 5) and map to our Constants (1 to 6)
-                // Adding 1 because our constants start at 1
+                // We add 1 because our constants start at 1
                 val selectedCategoryIndex = spinnerCategory.selectedItemPosition + 1
 
                 val intent = Intent(this@MainActivity, QuestionActivity::class.java)
                 intent.putExtra("myUsername", myUsername)
-                intent.putExtra(
-                    Constants.SELECTED_CATEGORY,
-                    selectedCategoryIndex
-                ) // Pass the category ID
+                intent.putExtra(Constants.SELECTED_CATEGORY, selectedCategoryIndex)
 
                 startActivity(intent)
                 finish()

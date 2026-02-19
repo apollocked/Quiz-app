@@ -55,8 +55,7 @@
         android:textColor="@color/lightGrey"
         android:textSize="20sp"
         android:textStyle="bold"
-
-        tools:text=" Your Score is 9 out of 10" />
+        tools:text="Your Score is 9 out of 10" />
 
     <Button
         android:id="@+id/button_finish"
