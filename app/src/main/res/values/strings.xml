@@ -7,4 +7,8 @@
     <string name="start">Start</string>
     <string name="image_of_the_flag">image of the flag</string>
     <string name="check">check</string>
+    <string name="result">Result</string>
+    <string name="trofy">trofy</string>
+    <string name="hey_congratulations">Hey, Congratulations!</string>
+    <string name="finish">FINISH</string>
 </resources>

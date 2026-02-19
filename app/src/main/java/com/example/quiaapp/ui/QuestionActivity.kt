@@ -1,5 +1,6 @@
 package com.example.quiaapp.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -26,6 +27,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var optionThree: TextView
     private lateinit var optionFour: TextView
     private lateinit var buttonSubmit: Button
+    private var score = 0
     private var questionCounter = 0
     private var questionList = mutableListOf<Quistions>()
     private var selectedOption = 0
@@ -88,7 +90,26 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
             questionCounter++
             answered = false
+
+        } else {
+            buttonSubmit.setOnClickListener {
+                // 1. Create intent for the next activity
+                val resultIntent = Intent(this@QuestionActivity, ResultActivity::class.java)
+
+                // 2. Get the username from the INCOMING intent (the one that started QuestionActivity)
+                // Note: 'intent' (without a variable name) refers to the getIntent() of this activity
+                val myUsername = intent.getStringExtra("myUsername")
+
+                // 3. Pass the data forward to ResultActivity
+                resultIntent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
+                resultIntent.putExtra("myUsername", myUsername)
+                resultIntent.putExtra(Constants.CORRECT_ANSWERS, score)
+
+                startActivity(resultIntent)
+                finish()
+            }
         }
+
     }
 
     private fun resetOptions() {
@@ -168,22 +189,22 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             when (selectedOption) {
                 1 -> {
                     optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
+                    score++
                 }
 
                 2 -> {
                     optionTwo.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
+                    score++
                 }
 
                 3 -> {
                     optionThree.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
+                    score++
                 }
 
                 4 -> {
                     optionFour.background = ContextCompat.getDrawable(this, R.drawable.correct)
-
+                    score++
                 }
             }
 
@@ -216,6 +237,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showAnswer() {
+
         when (currentQuestion.correctAnswer) {
             1 -> {
                 optionOne.background = ContextCompat.getDrawable(this, R.drawable.correct)

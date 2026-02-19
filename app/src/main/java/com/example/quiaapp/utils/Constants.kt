@@ -4,6 +4,13 @@ import com.example.quiaapp.R
 import com.example.quiaapp.models.Quistions
 
 object Constants {
+
+
+
+
+        const val TOTAL_QUESTIONS = "total_questions"
+        const val CORRECT_ANSWERS = "correct_answers"
+
     fun getQuestions(): MutableList<Quistions> {
         val questionsList = mutableListOf<Quistions>()
         val question1 = Quistions(

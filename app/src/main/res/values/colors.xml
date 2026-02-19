@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+
     <color name="white">#FFFFFFFF</color>
+    <color name="lightGrey">#CCCBCB</color>
+    <color name="holo_blue_light">#FF00BFFF</color>
+    <color name="holo_orange_light">#FFFFA500</color>
     <color name="holo_green_light">#FF00FF00</color>
     <color name="holo_red_light">#FFFF0000</color>
     <color name="blue">#FF0000FF</color>
+    <color name="purple_700">#FF7201A9</color>
+    <color name="yellow">#FFFFEB3B</color>
+    <color name="orange">#FFFF7043</color>
+    <color name="pink">#FFFF485F</color>
+
     <color name="grey">#FF808080</color>
     <color name="darkGrey">#6F6F6F</color>
 </resources>
