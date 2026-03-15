@@ -14,6 +14,8 @@
     <string name="congratulations">Hey, Congratulations!</string>
     <string name="your_name">Your Name</string>
     <string name="start_again">START AGAIN</string>
+    <string name="play_again">PLAY AGAIN</string>
+    <string name="back_to_home">BACK TO HOME</string>
     <string name="select_category">Choose Category</string>
     <string name="please_enter_name">Please enter your name</string>
     <string name="please_select_category">Please select a category</string>

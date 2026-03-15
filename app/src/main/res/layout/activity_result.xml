@@ -34,9 +34,9 @@
 
             <ImageView
                 android:id="@+id/image_view_trophy"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp"
                 android:contentDescription="@string/trophy"
                 android:src="@drawable/img" />
 
@@ -44,7 +44,7 @@
                 android:id="@+id/text_view_congratulations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/congratulations"
                 android:textColor="@color/accent_purple"
                 android:textSize="22sp"
@@ -64,22 +64,55 @@
                 android:id="@+id/text_view_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/grey_dark"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Your Score is 9 out of 10" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="24dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/select_category"
+                android:textColor="@color/primary_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_category_result"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bbb"
+                android:padding="8dp" />
+
             <Button
-                android:id="@+id/button_finish"
+                android:id="@+id/button_restart"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="@color/accent_blue"
-                android:text="@string/start_again"
+                android:text="PLAY AGAIN"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp" />
+
+            <Button
+                android:id="@+id/button_finish"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="BACK TO HOME"
+                android:textColor="@color/grey_dark"
+                android:textSize="14sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
