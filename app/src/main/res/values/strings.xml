@@ -1,17 +1,23 @@
 <resources>
     <string name="app_name">QuizApp</string>
-    <string name="quia_app">Quiz App</string>
-    <string name="wellcome">Wellcome</string>
-    <string name="please_enter_yourname">please enter yourname</string>
-    <string name="name">name</string>
-    <string name="start">Start</string>
+    <string name="quiz_master">QUIZ MASTER</string>
+    <string name="welcome">Welcome!</string>
+    <string name="enter_name_instruction">Enter your name to begin</string>
+    <string name="name_hint">Your Name</string>
+    <string name="start_quiz">START QUIZ</string>
     <string name="image_of_the_flag">image of the flag</string>
-    <string name="check">check</string>
+    <string name="check_btn">CHECK</string>
+    <string name="next_btn">NEXT</string>
+    <string name="finish_btn">FINISH</string>
     <string name="result">Result</string>
-    <string name="trofy">trofy</string>
-    <string name="hey_congratulations">Hey, Congratulations!</string>
-    <string name="finish">FINISH</string>
+    <string name="trophy">Trophy</string>
+    <string name="congratulations">Hey, Congratulations!</string>
     <string name="your_name">Your Name</string>
-    <string name="start_again">Start Again</string>
-    <string name="select_category">Select Category:</string>
+    <string name="start_again">START AGAIN</string>
+    <string name="select_category">Choose Category</string>
+    <string name="please_enter_name">Please enter your name</string>
+    <string name="please_select_category">Please select a category</string>
+    <string name="please_select_option">Please select an option</string>
+    <string name="score_format">Your Score is %1$d out of %2$d</string>
+    <string name="timer_format">Time: %1$d</string>
 </resources>

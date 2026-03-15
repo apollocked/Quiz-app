@@ -30,20 +30,18 @@ class MainActivity : AppCompatActivity() {
         spinnerCategory.adapter = adapter
 
         button.setOnClickListener {
-            if (spinnerCategory.selectedItemPosition == -1)
-                Toast.makeText(this@MainActivity, "Please select a category", Toast.LENGTH_LONG).show()
-            else
-            if (editText.text.isEmpty()) {
-                Toast.makeText(this@MainActivity, "Please enter your name", Toast.LENGTH_LONG).show()
+            val name = editText.text.toString().trim()
+            
+            if (spinnerCategory.selectedItemPosition == -1) {
+                Toast.makeText(this, getString(R.string.please_select_category), Toast.LENGTH_SHORT).show()
+            } else if (name.isEmpty()) {
+                Toast.makeText(this, getString(R.string.please_enter_name), Toast.LENGTH_SHORT).show()
             } else {
-                val myUsername = editText.text.toString()
-
                 // Get selected category index (0 to 5) and map to our Constants (1 to 6)
-                // We add 1 because our constants start at 1
                 val selectedCategoryIndex = spinnerCategory.selectedItemPosition + 1
 
-                val intent = Intent(this@MainActivity, QuestionActivity::class.java)
-                intent.putExtra("myUsername", myUsername)
+                val intent = Intent(this, QuestionActivity::class.java)
+                intent.putExtra("myUsername", name)
                 intent.putExtra(Constants.SELECTED_CATEGORY, selectedCategoryIndex)
 
                 startActivity(intent)
