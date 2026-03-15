@@ -14,12 +14,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="QUIZ MASTER"
+        android:layout_marginBottom="8dp"
+        android:text="@string/quiz_master"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:letterSpacing="0.1"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        tools:text="Best Score: 10/10" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -38,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome!"
+                android:text="@string/welcome"
                 android:textColor="@color/primary_dark"
                 android:textSize="28sp"
                 android:textStyle="bold" />
@@ -47,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="24dp"
-                android:text="Enter your name to begin"
+                android:text="@string/enter_name_instruction"
                 android:textColor="@color/grey_dark"
                 android:textSize="16sp" />
 
@@ -62,7 +72,7 @@
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Your Name"
+                    android:hint="@string/name_hint"
                     android:inputType="textPersonName"
                     android:padding="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Choose Category"
+                android:text="@string/select_category"
                 android:textColor="@color/primary_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -90,7 +100,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="@color/accent_blue"
-                android:text="START QUIZ"
+                android:text="@string/start_quiz"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp" />

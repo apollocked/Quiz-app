@@ -1,9 +1,17 @@
 package com.example.quiaapp.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -27,6 +35,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var optionThree: TextView
     private lateinit var optionFour: TextView
     private lateinit var buttonSubmit: Button
+    private lateinit var textViewTimer: TextView
 
     private var score = 0
     private var questionCounter = 0
@@ -34,6 +43,11 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private var selectedOption = 0
     private lateinit var currentQuestion: Quistions
     private var answered = false
+
+    private var countDownTimer: CountDownTimer? = null
+    private val timerDuration: Long = 15000 // 15 seconds
+    
+    private val toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +62,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         optionThree = findViewById(R.id.option_three)
         optionFour = findViewById(R.id.option_four)
         buttonSubmit = findViewById(R.id.button_submit)
+        textViewTimer = findViewById(R.id.tv_timer)
 
         optionOne.setOnClickListener(this)
         optionTwo.setOnClickListener(this)
@@ -60,6 +75,31 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
         progressBar.max = questionList.size
 
         showNextQuestion()
+    }
+
+    private fun startTimer() {
+        countDownTimer?.cancel()
+        countDownTimer = object : CountDownTimer(timerDuration, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsRemaining = millisUntilFinished / 1000
+                textViewTimer.text = getString(R.string.timer_format, secondsRemaining.toInt())
+                
+                if (secondsRemaining <= 5) {
+                    textViewTimer.setTextColor(Color.RED)
+                    // Optional: Tick sound
+                    toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 100)
+                } else {
+                    textViewTimer.setTextColor(Color.WHITE)
+                }
+            }
+
+            override fun onFinish() {
+                if (!answered) {
+                    textViewTimer.text = getString(R.string.timer_format, 0)
+                    checkAnswer() 
+                }
+            }
+        }.start()
     }
 
     private fun showNextQuestion() {
@@ -83,27 +123,27 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
             optionFour.text = question.optionFour
 
             resetOptions()
-
-            if (questionCounter == questionList.size - 1) {
-                buttonSubmit.text = getString(R.string.finish_btn)
-            } else {
-                buttonSubmit.text = getString(R.string.check_btn)
-            }
+            buttonSubmit.text = if (questionCounter == questionList.size - 1) getString(R.string.finish_btn) else getString(R.string.check_btn)
 
             questionCounter++
             answered = false
-
+            startTimer()
         } else {
-            val resultIntent = Intent(this, ResultActivity::class.java)
-            val myUsername = intent.getStringExtra("myUsername")
-
-            resultIntent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
-            resultIntent.putExtra("myUsername", myUsername)
-            resultIntent.putExtra(Constants.CORRECT_ANSWERS, score)
-
-            startActivity(resultIntent)
-            finish()
+            navigateToResult()
         }
+    }
+
+    private fun navigateToResult() {
+        countDownTimer?.cancel()
+        val resultIntent = Intent(this, ResultActivity::class.java)
+        val myUsername = intent.getStringExtra("myUsername")
+
+        resultIntent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
+        resultIntent.putExtra("myUsername", myUsername)
+        resultIntent.putExtra(Constants.CORRECT_ANSWERS, score)
+
+        startActivity(resultIntent)
+        finish()
     }
 
     private fun resetOptions() {
@@ -149,17 +189,38 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun checkAnswer() {
         answered = true
+        countDownTimer?.cancel()
         disableOptions()
         
         if (selectedOption == currentQuestion.correctAnswer) {
             highlightAnswer(selectedOption, R.drawable.correct)
             score++
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_ACK, 200)
         } else {
-            highlightAnswer(selectedOption, R.drawable.wrong)
+            if (selectedOption != 0) highlightAnswer(selectedOption, R.drawable.wrong)
             highlightAnswer(currentQuestion.correctAnswer, R.drawable.correct)
+            vibrateDevice()
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 200)
         }
         
         buttonSubmit.text = if (questionCounter == questionList.size) getString(R.string.finish_btn) else getString(R.string.next_btn)
+    }
+
+    private fun vibrateDevice() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(200)
+        }
     }
 
     private fun disableOptions() {
@@ -170,23 +231,23 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun highlightAnswer(answer: Int, drawable: Int) {
-        when (answer) {
-            1 -> {
-                optionOne.background = ContextCompat.getDrawable(this, drawable)
-                optionOne.setTextColor(Color.WHITE)
-            }
-            2 -> {
-                optionTwo.background = ContextCompat.getDrawable(this, drawable)
-                optionTwo.setTextColor(Color.WHITE)
-            }
-            3 -> {
-                optionThree.background = ContextCompat.getDrawable(this, drawable)
-                optionThree.setTextColor(Color.WHITE)
-            }
-            4 -> {
-                optionFour.background = ContextCompat.getDrawable(this, drawable)
-                optionFour.setTextColor(Color.WHITE)
-            }
+        val target = when (answer) {
+            1 -> optionOne
+            2 -> optionTwo
+            3 -> optionThree
+            4 -> optionFour
+            else -> null
         }
+        
+        target?.apply {
+            background = ContextCompat.getDrawable(this@QuestionActivity, drawable)
+            setTextColor(Color.WHITE)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
+        toneGenerator.release()
     }
 }
